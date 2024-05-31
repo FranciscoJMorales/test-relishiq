@@ -1,0 +1,25 @@
+{
+    "name": "test-relishiq",
+    "version": "1.0.0",
+    "description": "Relish IQ development test",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FranciscoJMorales/test-relishiq.git"
+    },
+    "author": "Francisco Morales",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/FranciscoJMorales/test-relishiq/issues"
+    },
+    "homepage": "https://github.com/FranciscoJMorales/test-relishiq#readme",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "express-validator": "^7.1.0",
+        "morgan": "^1.10.0"
+    }
+}
