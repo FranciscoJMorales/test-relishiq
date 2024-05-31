@@ -1,5 +1,10 @@
-export const FindPhotos = async () => {
-    return await fetch('https://jsonplaceholder.typicode.com/photos').then(res => res.json());
+export const FindPhotos = async ({title, albumTitle, albumUserEmail, limit, offset}) => {
+    limit = limit ? parseInt(limit) : 25;
+    offset = offset ? parseInt(offset) : 0;
+
+    const photos = await fetch('https://jsonplaceholder.typicode.com/photos').then(res => res.json());
+    
+    return photos.slice(offset, offset + limit);
 };
 
 export const FindPhoto = async (id) => {

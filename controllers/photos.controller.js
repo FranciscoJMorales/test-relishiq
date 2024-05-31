@@ -1,7 +1,7 @@
 import { FindPhotos, FindPhoto } from "../services/photos.service.js";
 
 export const GetPhotos = async (req, res) => {
-    const photos = await FindPhotos();
+    const photos = await FindPhotos(req.query);
     res.status(200).json(photos);
 };
 
