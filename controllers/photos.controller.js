@@ -1,12 +1,12 @@
-import { FindPhotos, FindPhoto } from "../services/photos.service.js";
+import { FindPhotosPopulated, FindPhotoPopulated } from "../services/photos.service.js";
 
 export const GetPhotos = async (req, res) => {
-    const photos = await FindPhotos(req.query);
+    const photos = await FindPhotosPopulated(req.query);
     res.status(200).json(photos);
 };
 
 export const GetPhoto = async (req, res) => {
     const { id } = req.params;
-    const photo = await FindPhoto(id);
+    const photo = await FindPhotoPopulated(id);
     res.status(200).json(photo);
 };

@@ -8,9 +8,9 @@ const PhotosRouter = Router();
 PhotosRouter.get(
     '/',
     [
-        query('title').trim(),
-        query('album.title').trim(),
-        query('album.user.email').trim(),
+        query('title').trim().toLowerCase(),
+        query('album.title').trim().toLowerCase(),
+        query('album.user.email').trim().toLowerCase(),
         query('limit', 'Limit must be a positive number lesser or equal to 100').isInt({ min:1, max: 100 }).optional(),
         query('offset', 'Offset must be a number greater or equal to 0').isInt({ min:0 }).optional(),
         ValidateRequest
