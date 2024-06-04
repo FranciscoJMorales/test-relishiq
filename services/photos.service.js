@@ -2,31 +2,36 @@ export const FindPhotosPopulated = async ({title, albumTitle, albumUserEmail, li
     limit = limit ? parseInt(limit) : 25;
     offset = offset ? parseInt(offset) : 0;
 
-    let photos = await FindPhotos();
+    // Get data at start to avoid multiple requests
+    const photos = await FindPhotos();
+    const albums = await FindAlbums();
+    const users = await FindUsers();
 
-    // Filter each field separately to reduce requests sent
-    if (title)
-        photos = photos.filter(photo => photo.title.toLowerCase().includes(title));
-
-    for (const photo of photos) {
-        photo.album = await FindAlbum(photo.albumId);
-        // Remove albumId property since it is not a part of the expected output
-        delete photo.albumId;
-    }
-
-    if (albumTitle)
-        photos = photos.filter(photo => photo.album.title.toLowerCase().includes(albumTitle));
+    const result = [];
+    let skip = 0;
 
     for (const photo of photos) {
-        photo.album.user = await FindUser(photo.album.userId);
-        // Remove userId property since it is not a part of the expected output
-        delete photo.album.userId;
+        // Populate photo album and user
+        PopulatePhoto(photo, albums, users);
+
+        // Apply filters
+        if (
+            (!title || photo.title.toLowerCase().includes(title))
+            && (!albumTitle || photo.album.title.toLowerCase().includes(albumTitle))
+            && (!albumUserEmail || photo.album.user.email.toLowerCase() === albumUserEmail)
+        ) {
+            // Skip offset count and start adding after offset has been reached
+            if (skip < offset)
+                skip++;
+            else {
+                result.push(photo);
+                if (result.length === limit)
+                    return result;
+            }
+        }
     }
 
-    if (albumUserEmail)
-        photos = photos.filter(photo => photo.album.user.email.toLowerCase() === albumUserEmail);
-
-    return photos.slice(offset, offset + limit);
+    return result;
 };
 
 export const FindPhotoPopulated = async (id) => {
@@ -43,10 +48,28 @@ export const FindPhotoPopulated = async (id) => {
     return photo;
 };
 
+// Private methods
+
+const PopulatePhoto = (photo, albums, users) => {
+    photo.album = albums.find(a => a.id === photo.albumId);
+    // Remove albumId property since it is not a part of the expected output
+    delete photo.albumId;
+
+    if (!photo.album.user) {
+        photo.album.user = users.find(u => u.id === photo.album.userId);
+        // Remove userId property since it is not a part of the expected output
+        delete photo.album.userId;
+    }
+}
+
 const FindPhotos = async () => await fetch('https://jsonplaceholder.typicode.com/photos').then(res => res.json());
 
 const FindPhoto = async (id) => await fetch(`https://jsonplaceholder.typicode.com/photos/${id}`).then(res => res.json());
 
+const FindAlbums = async () => await fetch(`https://jsonplaceholder.typicode.com/albums`).then(res => res.json());
+
 const FindAlbum = async (id) => await fetch(`https://jsonplaceholder.typicode.com/albums/${id}`).then(res => res.json());
+
+const FindUsers = async () => await fetch(`https://jsonplaceholder.typicode.com/users`).then(res => res.json());
 
 const FindUser = async (id) => await fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => res.json());
