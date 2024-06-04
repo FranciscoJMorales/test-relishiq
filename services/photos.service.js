@@ -1,3 +1,7 @@
+import { FindAlbum, FindAlbums } from "../data-access/albums.data.js";
+import { FindPhoto, FindPhotos } from "../data-access/photos.data.js";
+import { FindUser, FindUsers } from "../data-access/users.data.js";
+
 export const FindPhotosPopulated = async ({title, albumTitle, albumUserEmail, limit, offset}) => {
     limit = parseInt(limit ?? process.env.DEFAULT_LIMIT);
     offset = parseInt(offset ?? 0);
@@ -61,15 +65,3 @@ const PopulatePhoto = (photo, albums, users) => {
         delete photo.album.userId;
     }
 }
-
-const FindPhotos = async () => await fetch('https://jsonplaceholder.typicode.com/photos').then(res => res.json());
-
-const FindPhoto = async (id) => await fetch(`https://jsonplaceholder.typicode.com/photos/${id}`).then(res => res.json());
-
-const FindAlbums = async () => await fetch(`https://jsonplaceholder.typicode.com/albums`).then(res => res.json());
-
-const FindAlbum = async (id) => await fetch(`https://jsonplaceholder.typicode.com/albums/${id}`).then(res => res.json());
-
-const FindUsers = async () => await fetch(`https://jsonplaceholder.typicode.com/users`).then(res => res.json());
-
-const FindUser = async (id) => await fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => res.json());
