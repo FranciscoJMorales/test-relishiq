@@ -20,4 +20,4 @@ PhotosRouter.get(
 
 PhotosRouter.get('/:id', GetPhoto);
 
-export { PhotosRouter };
+export default PhotosRouter;
