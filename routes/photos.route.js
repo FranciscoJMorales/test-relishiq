@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { query } from "express-validator";
+import { param, query } from "express-validator";
 import { GetPhotos, GetPhoto } from "../controllers/photos.controller.js";
 import { ValidateRequest } from "../middlewares/validate-request.js";
 
@@ -18,6 +18,13 @@ PhotosRouter.get(
     GetPhotos
 );
 
-PhotosRouter.get('/:id', GetPhoto);
+PhotosRouter.get(
+    '/:id',
+    [
+        param('id', 'Photo id must be a number greater to 0 and lesser or equal to 5000').isInt({ min:1, max: 5000 }).notEmpty(),
+        ValidateRequest
+    ],
+    GetPhoto
+);
 
 export default PhotosRouter;
