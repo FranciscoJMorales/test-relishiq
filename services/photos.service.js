@@ -1,6 +1,6 @@
 export const FindPhotosPopulated = async ({title, albumTitle, albumUserEmail, limit, offset}) => {
-    limit = limit ? parseInt(limit) : 25;
-    offset = offset ? parseInt(offset) : 0;
+    limit = parseInt(limit ?? process.env.DEFAULT_LIMIT);
+    offset = parseInt(offset ?? 0);
 
     // Get data at start to avoid multiple requests
     const photos = await FindPhotos();
