@@ -1,5 +1,5 @@
 {
-    "name": "test-relishiq",
+    "name": "test-relishiq-backend",
     "version": "1.0.0",
     "description": "Relish IQ development test",
     "main": "app.js",
@@ -11,14 +11,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/FranciscoJMorales/test-relishiq.git"
+        "url": "git+https://github.com/FranciscoJMorales/test-relishiq-backend.git"
     },
     "author": "Francisco Morales",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/FranciscoJMorales/test-relishiq/issues"
+        "url": "https://github.com/FranciscoJMorales/test-relishiq-backend/issues"
     },
-    "homepage": "https://github.com/FranciscoJMorales/test-relishiq#readme",
+    "homepage": "https://github.com/FranciscoJMorales/test-relishiq-backend#readme",
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
