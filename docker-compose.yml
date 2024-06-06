@@ -1,0 +1,22 @@
+services:
+  backend:
+    image: fjmorales/backend-relish
+    container_name: backend
+    ports:
+      - "3000:80"
+    networks:
+      - relish
+    restart: always
+
+  frontend:
+    image: fjmorales/frontend-relish
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - relish
+    restart: always
+
+networks:
+  relish:
+    driver: bridge
